@@ -172,7 +172,15 @@ public class MyLinkedList<T extends Comparable<T>> {
     //quicksort
     public void sort() {
         if (size <= 1) return;
+        
+        //gets last node
+        var last = first;
+        while (last != null && last.next != null) {
+            last = last.next;
+        }
 
+        quickSort(first, last);
+        
     }
 
     private void quickSort(Node<T> start, Node<T> end){
@@ -182,15 +190,17 @@ public class MyLinkedList<T extends Comparable<T>> {
             var pivot = start;
             var curr = start;
 
-            while(curr != end) {
+            while(curr != end.next) {
                 if (curr.item.compareTo(start.item) < 0) {
                     pivot = pivot.next;
                     swap(pivot, curr);
                 } 
+                curr = curr.next;
             }
+            swap(start, pivot);
+            quickSort(start, pivot);
+            quickSort(pivot.next, end);
         }
-
-        
     }
     
 

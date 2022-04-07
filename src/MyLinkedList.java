@@ -163,6 +163,7 @@ public class MyLinkedList<T extends Comparable<T>> {
     }
 
     private void swap(Node<T> a, Node<T> b) {
+        if (a == b) return;
         T temp = a.item;
         a.item = b.item;
         b.item = temp;
@@ -182,10 +183,10 @@ public class MyLinkedList<T extends Comparable<T>> {
             var curr = start;
 
             while(curr != end) {
-                if (curr.item.compareTo(end.item)) {}
-            }
-            for (int i = start; i < finish + 1; i++) {
-                if (list.get(i) < list.get(start));
+                if (curr.item.compareTo(start.item) < 0) {
+                    pivot = pivot.next;
+                    swap(pivot, curr);
+                } 
             }
         }
 
@@ -195,7 +196,7 @@ public class MyLinkedList<T extends Comparable<T>> {
 
 }
 
-class Node<T extends Comparable<T>>  {
+class Node<T>  {
     public T item;
     public Node<T> next;
     

@@ -1,17 +1,10 @@
-
+//
 public class MyLinkedList<T extends Comparable<T>> {
     public int comparisons;
-    private Node<T> first;
-    private Node<T> current;
-    private Node<T> previous;
+    private Node first;
+    private Node current;
+    private Node previous;
     private int size;
-
-    public MyLinkedList(Node<T> node) {
-        first = node;
-        current = node;
-        previous = null;
-        size = 1;
-    }
 
     public MyLinkedList(T elem) {
         Node newNode = new Node(elem);
@@ -77,13 +70,13 @@ public class MyLinkedList<T extends Comparable<T>> {
         objRemoved = current.item;
         //if first element of list
         if (previous == null){
-            Node<T> placeholder = current.next;
+            Node placeholder = current.next;
             current.next = null;
             current = placeholder;
             first = placeholder;
         //if middle of the list
         } else {
-            Node<T> placeholder = current.next;
+            Node placeholder = current.next;
             current.next = null;
             current = placeholder;
             previous.next = placeholder;
@@ -130,7 +123,7 @@ public class MyLinkedList<T extends Comparable<T>> {
             return -1;
         }
         
-        Node<T> temp = first;
+        Node temp = first;
 
         int index = 0;
         while (temp != null) {
@@ -143,7 +136,6 @@ public class MyLinkedList<T extends Comparable<T>> {
 
         return -1;
     }
-
 
     public int size() {
         return size;
@@ -170,31 +162,58 @@ public class MyLinkedList<T extends Comparable<T>> {
         return str.toString();
     }
 
+    private void swap(Node a, Node b) {
+        T temp = a.item;
+        a.item = b.item;
+        b.item = temp;
+    }
+
+    //quicksort
     public void sort() {
+        if (size <= 1) return;
+
+    }
+
+    private void quickSort(Node start, Node end){
+        if (start == end) {
+            return;
+        } else {
+            Node pivot = start;
+            Node curr = start;
+
+            while(curr != end) {
+                if (curr.item.compareTo(start.item)) {}
+            }
+            for (int i = start; i < finish + 1; i++) {
+                if (list.get(i) < list.get(start));
+            }
+        }
+
         
     }
+    
+    class Node {
+        public T item;
+        public Node next;
+    
+        public Node(){
+            this.item = null;
+            this.next = null;
+        }
+    
+        public Node(T item){
+            this.item = item;
+            this.next = null;
+        }
+    
+        public Node(T item, Node next){
+            this.item = item;
+            this.next = next;
+        }
+    
+        public String toString(){
+            return this.item.toString();
+        }
+    }
 }
 
-class Node<T extends Comparable<T>> {
-    public T item;
-    public Node<T> next;
-
-    public Node(){
-        this.item = null;
-        this.next = null;
-    }
-
-    public Node(T item){
-        this.item = item;
-        this.next = null;
-    }
-
-    public Node(T item, Node<T> next){
-        this.item = item;
-        this.next = next;
-    }
-
-    public String toString(){
-        return this.item.toString();
-    }
-}

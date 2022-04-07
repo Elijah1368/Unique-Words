@@ -1,3 +1,4 @@
+
 public class MyOrderedList<T extends Comparable<T>> {
     private MyArrayList<T> list;
     public int comparisons;

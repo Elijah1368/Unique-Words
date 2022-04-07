@@ -1,3 +1,4 @@
+
 //
 public class MyLinkedList<T extends Comparable<T>> {
     public int comparisons;

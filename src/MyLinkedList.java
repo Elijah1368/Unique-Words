@@ -1,13 +1,13 @@
 //
 public class MyLinkedList<T extends Comparable<T>> {
     public int comparisons;
-    private Node first;
-    private Node current;
-    private Node previous;
+    private Node<T> first;
+    private Node<T> current;
+    private Node<T> previous;
     private int size;
 
     public MyLinkedList(T elem) {
-        Node newNode = new Node(elem);
+        var newNode = new Node<T>(elem);
         first = newNode;
         current = newNode;
         previous = null;
@@ -23,7 +23,7 @@ public class MyLinkedList<T extends Comparable<T>> {
 
     public void addBefore(T elem) {
 
-        Node newNode = new Node(elem);
+        var newNode = new Node<T>(elem);
         //if first element in list
         if (current == null && size == 0) {
             previous = newNode;
@@ -34,7 +34,7 @@ public class MyLinkedList<T extends Comparable<T>> {
             previous = newNode;
         //if current is first
         } else if (previous == null) {
-            Node placeholder = first;
+            var placeholder = first;
             first = newNode;
             newNode.next = placeholder;
         } else {
@@ -47,11 +47,11 @@ public class MyLinkedList<T extends Comparable<T>> {
     }
     
     public void addAfter(T elem) {
-        Node newNode = new Node(elem);
+        var newNode = new Node<T>(elem);
         if (current == null) { 
             return;
         } else {
-            Node placeholder = current.next;
+            var placeholder = current.next;
             current.next = newNode;
             newNode.next = placeholder;
         }
@@ -70,13 +70,13 @@ public class MyLinkedList<T extends Comparable<T>> {
         objRemoved = current.item;
         //if first element of list
         if (previous == null){
-            Node placeholder = current.next;
+            var placeholder = current.next;
             current.next = null;
             current = placeholder;
             first = placeholder;
         //if middle of the list
         } else {
-            Node placeholder = current.next;
+            var placeholder = current.next;
             current.next = null;
             current = placeholder;
             previous.next = placeholder;
@@ -123,7 +123,7 @@ public class MyLinkedList<T extends Comparable<T>> {
             return -1;
         }
         
-        Node temp = first;
+        var temp = first;
 
         int index = 0;
         while (temp != null) {
@@ -149,7 +149,7 @@ public class MyLinkedList<T extends Comparable<T>> {
         if (size == 0) return "[]";
 
         StringBuilder str = new StringBuilder("[");
-        Node temp = first;
+        var temp = first;
         str.append(temp.item);
         temp = temp.next;
 
@@ -162,7 +162,7 @@ public class MyLinkedList<T extends Comparable<T>> {
         return str.toString();
     }
 
-    private void swap(Node a, Node b) {
+    private void swap(Node<T> a, Node<T> b) {
         T temp = a.item;
         a.item = b.item;
         b.item = temp;
@@ -174,15 +174,15 @@ public class MyLinkedList<T extends Comparable<T>> {
 
     }
 
-    private void quickSort(Node start, Node end){
+    private void quickSort(Node<T> start, Node<T> end){
         if (start == end) {
             return;
         } else {
-            Node pivot = start;
-            Node curr = start;
+            var pivot = start;
+            var curr = start;
 
             while(curr != end) {
-                if (curr.item.compareTo(start.item)) {}
+                if (curr.item.compareTo(end.item)) {}
             }
             for (int i = start; i < finish + 1; i++) {
                 if (list.get(i) < list.get(start));
@@ -192,28 +192,29 @@ public class MyLinkedList<T extends Comparable<T>> {
         
     }
     
-    class Node {
-        public T item;
-        public Node next;
-    
-        public Node(){
-            this.item = null;
-            this.next = null;
-        }
-    
-        public Node(T item){
-            this.item = item;
-            this.next = null;
-        }
-    
-        public Node(T item, Node next){
-            this.item = item;
-            this.next = next;
-        }
-    
-        public String toString(){
-            return this.item.toString();
-        }
-    }
+
 }
 
+class Node<T extends Comparable<T>>  {
+    public T item;
+    public Node<T> next;
+    
+    public Node(){
+        this.item = null;
+        this.next = null;
+    }
+
+    public Node(T item){
+        this.item = item;
+        this.next = null;
+    }
+
+    public Node(T item, Node<T> next){
+        this.item = item;
+        this.next = next;
+    }
+
+    public String toString(){
+        return this.item.toString();
+    }
+}

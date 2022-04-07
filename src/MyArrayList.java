@@ -10,6 +10,7 @@ public class MyArrayList<T extends Comparable<T>> {
         this.list = (T[]) new Comparable[16];
         this.capacity = 16;
         this.size = 0;
+        comparisons = 0;
     }
 
     public MyArrayList(T[] elements) {
@@ -20,6 +21,7 @@ public class MyArrayList<T extends Comparable<T>> {
             this.capacity = 16;
         }
         this.size = elements.length;
+        comparisons = 0;
     }
 
     public void insert(T element, int index) {
@@ -43,12 +45,53 @@ public class MyArrayList<T extends Comparable<T>> {
     }
 
     public boolean contains(T element){
-        for (T e : this.list) {
-            if (element.equals(e)) {
+    
+        for (int i = 0; i < size; i++) {
+            if (element.compareTo(list[i]) == 0) {
                 return true;
             }
+            comparisons++;
         }
         return false;
+    }
+
+    public void sort() {
+        if (size <= 1) return;
+        quicksort(0, size - 1);
+    }
+
+    private void quicksort(int left, int right){
+        if (left >= right) {
+            return;
+        }
+        T pivot = list[(left + right) / 2];
+        int part = partition(left, right, pivot);
+        quicksort(left, part - 1);
+        quicksort(part, right);
+    }
+
+    private int partition(int left, int right, T pivot) {
+        while (left <= right) {
+            while (list[left].compareTo(pivot) < 0) {
+                left++;
+            }
+            while (list[right].compareTo(pivot) > 0) {
+                right--;
+            }
+
+            if (left <= right) {
+                swap(left, right);
+                left++;
+                right--;
+            }
+        }
+        return left;
+    }
+
+    private void swap(int a, int b){
+        T temp = list[a];
+        list[a] = list[b];
+        list[b] = temp;
     }
 
     public int indexOf(T element){
@@ -84,7 +127,7 @@ public class MyArrayList<T extends Comparable<T>> {
 
     private void resize(){
         int newCapacity = this.capacity * 2;
-        T[] newArr = (T[]) new Object[newCapacity];
+        T[] newArr = (T[]) new Comparable[newCapacity];
         for (int i = 0; i < size; i ++) {
             newArr[i] = list[i];
         }

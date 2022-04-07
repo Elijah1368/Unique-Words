@@ -12,6 +12,7 @@ public class MyLinkedList<T extends Comparable<T>> {
         current = newNode;
         previous = null;
         size = 1;
+        comparisons  =0;
     }
 
     public MyLinkedList() {
@@ -19,6 +20,7 @@ public class MyLinkedList<T extends Comparable<T>> {
         current = null;
         previous = null;
         size = 0;
+        comparisons = 0;
     }
 
     public void addBefore(T elem) {
@@ -115,7 +117,21 @@ public class MyLinkedList<T extends Comparable<T>> {
     }
 
     public boolean contains(T elem) {
-        return indexOf(elem) != -1;
+        if (size <= 0) {
+            return false;
+        }
+        
+        var temp = first;
+
+        while (temp != null) {
+            if (temp.item.compareTo(elem) == 0) {
+                return true;
+            }
+            comparisons++;
+            temp = temp.next;
+        }
+
+        return false;
     }
 
     public int indexOf(T elem) {
@@ -184,7 +200,7 @@ public class MyLinkedList<T extends Comparable<T>> {
     }
 
     private void quickSort(Node<T> start, Node<T> end){
-        if (start == end) {
+        if (start == end || start == null || end == null) {
             return;
         } else {
             var pivot = start;

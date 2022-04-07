@@ -1,12 +1,13 @@
 import java.util.Arrays;
 
-public class MyArrayList<T> {
+public class MyArrayList<T extends Comparable<T>> {
+    public int comparisons;
     private T[] list;
     private int capacity;
     private int size;
     
     public MyArrayList(){
-        this.list = (T[]) new Object[16];
+        this.list = (T[]) new Comparable[16];
         this.capacity = 16;
         this.size = 0;
     }

@@ -1,5 +1,6 @@
 
-public class MyLinkedList<T> {
+public class MyLinkedList<T extends Comparable<T>> {
+    public int comparisons;
     private Node<T> first;
     private Node<T> current;
     private Node<T> previous;
@@ -76,13 +77,13 @@ public class MyLinkedList<T> {
         objRemoved = current.item;
         //if first element of list
         if (previous == null){
-            Node placeholder = current.next;
+            Node<T> placeholder = current.next;
             current.next = null;
             current = placeholder;
             first = placeholder;
         //if middle of the list
         } else {
-            Node placeholder = current.next;
+            Node<T> placeholder = current.next;
             current.next = null;
             current = placeholder;
             previous.next = placeholder;
@@ -121,20 +122,28 @@ public class MyLinkedList<T> {
     }
 
     public boolean contains(T elem) {
-        if (size <= 0) {
-            return false;
-        }
+        return indexOf(elem) != -1;
+    }
 
-        Node temp = first;
+    public int indexOf(T elem) {
+        if (size <= 0) {
+            return -1;
+        }
+        
+        Node<T> temp = first;
+
+        int index = 0;
         while (temp != null) {
-            if (temp.item.equals(elem)) {
-                return true;
+            if (temp.item.compareTo(elem) == 0) {
+                return index;
             }
             temp = temp.next;
+            index++;
         }
 
-        return false;
+        return -1;
     }
+
 
     public int size() {
         return size;
@@ -160,9 +169,13 @@ public class MyLinkedList<T> {
         str.append("]");
         return str.toString();
     }
+
+    public void sort() {
+        
+    }
 }
 
-class Node<T> {
+class Node<T extends Comparable<T>> {
     public T item;
     public Node<T> next;
 

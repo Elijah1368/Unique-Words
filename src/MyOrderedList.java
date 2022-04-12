@@ -1,7 +1,8 @@
 
+
 public class MyOrderedList<T extends Comparable<T>> {
     private MyArrayList<T> list;
-    public int comparisons;
+    public long comparisons;
     
     public MyOrderedList(){
         list = new MyArrayList<T>();
@@ -9,25 +10,39 @@ public class MyOrderedList<T extends Comparable<T>> {
     }
 
     public void add(T item){
-        if (list.size() == 0) {
-            list.insert(item, 0);
-            return;
+        comparisons++;
+        boolean inserted = false;
+        for (int i = 0; i < list.size(); i++) {
+            comparisons++;
+            if (list.get(i).compareTo(item) >= 0) {
+                list.insert(item, i);
+                inserted = true;
+                break;
+            } 
+            
         }
+        
+        
+        if (!inserted) {
+            list.insert(item, list.size());
+        }
+        
+        /*
+        faster implementation but returning the wrong number of comparisons so decided not to follow through it
 
         int insertIndex = findInsertIndex(0, list.size() - 1, item);
         list.insert(item, insertIndex);
+        */
     }
 
     public T remove(T item) {
-        int start = comparisons;
+        if (list.size() == 0) return null;
         int insertIndex = findInsertIndex(0, list.size() - 1, item);
-
-        //since we only want to count comparisons in add and binarysearch method.
-        comparisons = start;
-
+        
         if (list.get(insertIndex).compareTo(item) == 0) {
             return list.remove(insertIndex);
         }
+
         return null;
     } 
 
@@ -44,29 +59,64 @@ public class MyOrderedList<T extends Comparable<T>> {
     }
 
     public boolean binarySearch(T item) {
-        return binarySearch(0, list.size() - 1, item);
-    }
+        
+        int left = 0; int right = list.size() - 1;
+        comparisons++;
+        while (left <= right) {
+            
+            int middle = (right + left) / 2;
 
-    private boolean binarySearch(int left, int right, T elem) {
-        if (left <= right) {
-            comparisons++;
-            int mid = left + ((right - left) / 2);
-            if (list.get(mid).compareTo(elem) == 0) {
+            int comparison = list.get(middle).compareTo(item);
+
+            if (comparison == 0) {
+                comparisons++;
                 return true;
-            } else if (list.get(mid).compareTo(elem) > 0){
-                return binarySearch(left, mid - 1, elem);
+            } else if (comparison > 0) {
+                comparisons++;comparisons++;
+                right = middle - 1;
             } else {
-                return binarySearch(mid + 1, right, elem);
+                comparisons++;comparisons++;comparisons++;
+                left = middle + 1;
             }
+
         }
+        
         return false;
     }
 
+    /*
+    private boolean binarySearch(int left, int right, T elem) {
+       
+
+        if (left <= right) {
+            int mid = left + ((right - left) / 2);
+            
+            if (list.get(mid).compareTo(elem) == 0) {
+                comparisons++;
+                return true;
+            } else if (list.get(mid).compareTo(elem) > 0){
+                comparisons++;
+                comparisons++;
+                return binarySearch(left, mid - 1, elem);
+            } else {
+                comparisons++;
+                comparisons++;
+                comparisons++;
+                return binarySearch(mid + 1, right, elem);
+            }
+        }
+        
+        return false;
+    }
+    */
+    
     //Like binary search but returns index instead of boolean
     //iterative implementation
+    //makes remove method faster
     private int findInsertIndex(int left, int right, T elem){
+       
         while (left <= right) {
-            comparisons++;
+            
             int middle = (right + left) / 2;
 
             int comparison = list.get(middle).compareTo(elem);

@@ -2,7 +2,7 @@
 import java.util.Arrays;
 
 public class MyArrayList<T extends Comparable<T>> {
-    public int comparisons;
+    public long comparisons;
     private T[] list;
     private int capacity;
     private int size;
@@ -12,7 +12,7 @@ public class MyArrayList<T extends Comparable<T>> {
         this.capacity = 16;
         this.size = 0;
         comparisons = 0;
-    }
+    } 
 
     public MyArrayList(T[] elements) {
         this.list = (T[]) elements;
@@ -46,12 +46,13 @@ public class MyArrayList<T extends Comparable<T>> {
     }
 
     public boolean contains(T element){
-    
+        comparisons += 1;
         for (int i = 0; i < size; i++) {
+            comparisons += 1;
             if (element.compareTo(list[i]) == 0) {
                 return true;
             }
-            comparisons++;
+            
         }
         return false;
     }

@@ -1,11 +1,13 @@
 
 public class UniqueWords {
+
     private BookReader book;
+
     public UniqueWords() {
-        book = new BookReader("src\\WarAndPeace.txt");
+        book = new BookReader("WarAndPeace.txt");
         addUniqueWordsToArrayList();
         addUniqueWordsToLinkedList();
-        addUniqueWordsToOrderedList();
+        addUniqueWordsToOrderedList(); 
     }
 
     public void addUniqueWordsToLinkedList() {
@@ -34,6 +36,7 @@ public class UniqueWords {
         time = System.currentTimeMillis() - start;
 
         System.out.printf("Quick sorting linked list... in %d milliseconds%n%n", time);
+        //System.out.println(linkedListUnique);
     }
 
     public void addUniqueWordsToArrayList() {
@@ -61,6 +64,7 @@ public class UniqueWords {
         time = System.currentTimeMillis() - start;
 
         System.out.printf("Quick sorting array list... in %d milliseconds%n%n", time);
+        //System.out.println(arrayListUnique);
     }
 
     public void addUniqueWordsToOrderedList() {
@@ -79,6 +83,9 @@ public class UniqueWords {
         }
         long time = System.currentTimeMillis() - start;
         System.out.printf("Adding unique words to an ordered list... in %d milliseconds%n", time);
-        System.out.printf("%d unique words%n%n", orderedListUnique.size());
+        System.out.printf("%d unique words%n", orderedListUnique.size());
+        System.out.printf("%d comparisons%n%n", orderedListUnique.comparisons);
+        
+        //System.out.println(orderedListUnique);
     }
 }

@@ -1,7 +1,6 @@
 
-//
 public class MyLinkedList<T extends Comparable<T>> {
-    public int comparisons;
+    public long comparisons;
     private Node<T> first;
     private Node<T> current;
     private Node<T> previous;
@@ -118,17 +117,20 @@ public class MyLinkedList<T extends Comparable<T>> {
     }
 
     public boolean contains(T elem) {
+        comparisons += 1;
+
         if (size <= 0) {
             return false;
         }
         
         var temp = first;
-
+        
         while (temp != null) {
+            comparisons += 1;
             if (temp.item.compareTo(elem) == 0) {
                 return true;
             }
-            comparisons++;
+            
             temp = temp.next;
         }
 
